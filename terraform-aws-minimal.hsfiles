@@ -1,0 +1,37 @@
+{-# START_FILE README.md #-}
+# Minimal Terraform Project on AWS
+
+* Follows VPC Scenario 2
+* POC for now
+{-# START_FILE .gitignore #-}
+.terraform
+.tfstate*
+{-# START_FILE main.tf #-}
+variable "aws_region" {
+  default     = "us-west-2"
+  description = "The AWS region to deploy the VPC and cloud resources to"
+}
+
+provider "aws" {
+  region = "${var.aws_region}"
+}
+
+module "vpc" {
+  source = "git::https://github.com/fpco/terraform-aws-foundation//modules/vpc-scenario-2?ref=0.12"
+
+  #source  = "fpco/foundation/aws//modules/vpc-scenario-2"
+  #version = "0.8.2"
+
+  region = "${var.aws_region}"
+}
+
+output "aws_region" {
+  value       = "${var.aws_region}"
+  description = "The VPC is in this AWS region"
+}
+
+output "vpc_id" {
+  value       = "${module.vpc.vpc_id}"
+  description = "VPC ID"
+}
+
