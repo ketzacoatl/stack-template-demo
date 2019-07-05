@@ -36,3 +36,5 @@ output "vpc_id" {
 }
 {-# START_FILE package.yaml #-}
 # trick stack new for now
+name:    {{name}}
+version: "0.0.0"
